@@ -101,7 +101,7 @@ if($isValid=true){
                                     <li class="active"><a href="#banner">HOME</a></li>
                                     <li><a href="rezervacija.php">REZERVACIJA</a></li>
                                     <li><a href="#menu">MENU</a></li>
-                                    <li><a href="#gallery">NARUDŽBA</a></li>
+                                    <li><a href="narudzba.php">NARUDŽBA</a></li>
                                     <li><a href="#footer">KONTAKT</a></li>
                                 </ul>
                             </div>
@@ -129,7 +129,7 @@ if($isValid=true){
                             <h2>Pronađite odgovarajuće mjesto </h2>
                             <p>Isprobajte ukusnu hranu</p>
                             <div class="book-btn">
-                                <a href="#reservation" class="table-btn hvr-underline-from-center">Rezervirajte stol</a>
+                                <a href="rezervacija.php" class="table-btn hvr-underline-from-center">Rezervirajte stol</a>
                             </div>
                             
                         </div>

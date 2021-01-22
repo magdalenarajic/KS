@@ -10,6 +10,8 @@ $password = ""; /* Password */
 $dbname = "restoran_baza"; /* Database name */
 
 $con = mysqli_connect($host, $user, $password,$dbname);
+
+    
 ?>
 
     <!-- Basic -->
@@ -63,7 +65,7 @@ $con = mysqli_connect($host, $user, $password,$dbname);
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav ">
                                     <li><a href="index.php">HOME</a></li>
-                                    <li><a href="#rezervacija">REZERVACIJA</a></li>
+                                    <li><a href="rezervacija.php">REZERVACIJA</a></li>
                                     <li><a href="index.php">MENU</a></li>
                                     <li><a href="narudzba.php">NARUDŽBA</a></li>
                                     <li><a href="#footer">KONTAKT</a></li>
@@ -76,132 +78,51 @@ $con = mysqli_connect($host, $user, $password,$dbname);
         </header>
     </div>
    
-
     <div id="reservation" class="reservations-main pad-top-100 pad-bottom-100">
-        <div class="container">
-            <div class="row"> <br>
-                <h2 class="block-title text-center">
-                    Rezervacija	</h2>
-                <div class="form-reservations-box">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
-					
-                        </div>
-                        <h4 class="form-title">REZERVIRAJ SADA</h4>
-                        <p>MOLIMO POPUNI SVA POLJA. HVALA!</p>
-                        <form  method="post" class="reservations-box" action="">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="text" name="ime"  placeholder="Ime" required="required">
-                                </div>
-                            </div>
+    <div class="container"> <br>
+    <div class="row"> <br>
+    <h3 >Molimo unesi ID svoje rezervacije:</h3>
+                                 <form  method="post"  action="">                              
+                                <div>  
+                                    <input type="text" name="id"  > 
+                                 <button  name ="btn" type="submit" > Potvrdi </button> <br> </div> 
+                                 <br>
                             
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="email" name="email"  placeholder="E-Mail" required="required">
-                                </div>
-                            </div>
-                            
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="text" name="broj_telefona"  placeholder="Broj telefona" required="required">
-                                </div>
-                            </div>
-                            <!-- end col -->
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="text" name="broj_osoba"  placeholder="Broj osoba" required="required">
-                                </div>
-                            </div>
-                            <!-- end col -->
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="text" name="datum" id="date-picker" placeholder="Datum" required="required" >
-                                </div>
-                            </div>
-                            <!-- end col -->
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="text" name="vrijeme" id="time" placeholder="Vrijeme" required="required">
-                                </div>
-                            </div>
-                            <!-- end col -->
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="text" name="hrana" placeholder="Hrana">
-                                </div>
-                            </div>
-                            <!-- end col --> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-box">
-                                    <input type="text" name="broj_stola"  placeholder="Broj stola" required="required">
-                                </div>
-                            </div>
-                            <!-- end col -->
-                            
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="reserve-book-btn text-center">
-                                    <button  name ="btn" type="submit" value="Rezerviraj" >Rezerviraj </button>
+                                 <?php
+                                 if(isset($_POST['btn'])){
                                     
-                                </div>
-                            </div>
-                            <?php
-                            if(isset($_POST['btn'])){
+                                    $id = filter_input(INPUT_POST, 'id');
+                                    $sql = "SELECT * FROM rezervacija WHERE id_rezervacija = " . $id;
+                                    if($result = mysqli_query($con, $sql)){
+                                        if(mysqli_num_rows($result) > 0){
+                                            while($row = mysqli_fetch_array($result)){
+                                                echo "<div> <h3>Vaše ime: ". $row['ime'] ." </h3>";
+                                                echo "<div> <h3>Email: ". $row['email'] ." </h3>";
+                                                echo "<div> <h3>Broj telefona: ". $row['broj_telefona'] ." </h3>";
+                                                echo "<div> <h3>Broj osoba: ". $row['broj_osoba'] ." </h3>";
+                                                echo "<div> <h3>Datum: ". $row['datum'] ." </h3>";
+                                                echo "<div> <h3>Vrijeme: ". $row['vrijeme'] ." </h3>";
+                                                echo "<div> <h3>Hrana: ". $row['hrana'] ." </h3>";
+                                                echo "<div> <h3>Broj stola: ". $row['broj_stola'] ." </h3>";
+                                                echo "                        </div>";
+                                            }
+                                            mysqli_free_result($result);
+                                        } else{
+                                            echo '<h4 class="no-annot">Nema takve rezervacije.</h4>';
+                                        }
+                                    } }
+                                    ?>
+                        
+                
+                
+                        
+                                
+                                
 
-                             $ime = filter_input(INPUT_POST, 'ime');
-                             $email = filter_input(INPUT_POST, 'email');
-                             $broj_telefona = filter_input(INPUT_POST, 'broj_telefona');
-                             $broj_osoba = filter_input(INPUT_POST, 'broj_osoba');
-                             $datum = filter_input(INPUT_POST, 'datum');
-                             $vrijeme = filter_input(INPUT_POST, 'vrijeme');
-                             $hrana = filter_input(INPUT_POST, 'hrana');
-                             $broj_stola = filter_input(INPUT_POST, 'broj_stola');
 
-
-                             // Check connection
-                              $isValid = false;
-
-                             if (!$con) {
-                              die("Connection failed: " . mysqli_connect_error());
-                               }
-                             else {
-                             $insert_query = "INSERT INTO rezervacija(ime, email,broj_telefona,broj_osoba,datum,vrijeme,hrana,broj_stola) values ('$ime', '$email','$broj_telefona', '$broj_osoba','$datum', '$vrijeme', '$hrana', '$broj_stola')";
-                             $stmt = $con->prepare($insert_query);
-                             $isValid = true;
-                             $stmt->execute();
-                             $stmt->close();
- 
-                             mysqli_query($con,$insert_query);
-                            if ($insert_query == TRUE){
-                            $last_id = $con->insert_id;
-                            echo "Uspjesno ste rezervirali.Vaš broj rezervacije je: " . $last_id;
-                             }
-       
-                             }
-                       
-                             ?>
-                             <?php
-                            }
-                            ?>
-                            
-                          
-                            <!-- end col -->
-                        </form>
-                        <!-- end form -->
-                    </div>
-                    <!-- end col -->
-                </div>
-            
-            <div class="shema">
-                <img width="250" src="images/shema.jpg " >
-            </div>
-                <!-- end reservations-box -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- end container -->
-    </div>
-    <!-- end reservations-main -->
+</div>
+</div>
+</div>
    
     <div id="footer" class="footer-main">
         <div class="footer-news pad-top-100 pad-bottom-70 parallax">
